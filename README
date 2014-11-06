@@ -1,0 +1,198 @@
+
+
+wmdl ( Window Maker DOOM load (meter) )
+
+Version 1.3.7
+
+A simple LOAD or CPU meter using ID Software's DOOM faces.
+( More Bloody = more system load or CPU usage ).
+
+Also can monitor almost anything else.
+
+---------------------------------------------------------------------------
+
+** NON LINUX -- NOTE **
+
+   The switches '-m cpu' and '-m load' (default) only work with 
+   Linux's /proc filesystem.
+
+   For other unixen, use the '-m command' switch. 
+   See 'Command Mode Example 1'.
+
+   This '-m command' switch can be used to monitor almost anything.
+
+
+INSTALL:
+--------
+
+    untar and unzip
+    make
+    copy wmdl to some directory in your $PATH.
+    ( ie: cp wmdl /usr/local/bin ) 
+
+    type wmdl
+
+    Grab the appicon and move it to the dock. 
+
+    If make doesn't work, you may need to fiddle with the settings in 
+    the Makefile. Please let me know what you did to get it working on your
+    flavor of unix.
+
+    Tested on:
+        WindowMaker-0.20.3
+        X Clients: Red Hat 5.0 intel 
+                   Red Hat 5.2 sparc
+                   HP-UX 10.20
+        X Servers: XFree86, Exceed
+
+
+
+USAGE:
+------
+wmdl 1.3.7
+usage: [-v] [-h] 
+       [-s yes/no] [-w withdrawn/iconic/normal] 
+       [-m cpu/load/uptime] 
+       [-f scale_factor ] [-u miliseconds] 
+       [-d dislay ] [-g geometry ]
+
+
+-g                        geometry:  ie: 64x64+10+10
+-d                             dpy:  Display. ie: 127.0.0.1:0.0
+-v                                :  Verbose.
+-h                                :  Help. This screen.
+-w         withdrawn/iconic/normal:  Windows: Iconic, Normal, or Withdrawn
+-s                          yes/no:  Shaped window: y or n
+-m cpu/load/command[command index]:  Use load, cpu, or external command
+-f                    scale_factor:  Scale: floating point number = 100% bloody
+-u                     miliseconds:  Update period in miliseconds
+
+Defaults:
+   -g 64x64+10+10
+   -d NULL
+   -w withdrawn
+   -s yes
+   -m load
+   -f 1.0   ( for CPU  )
+   -f 2.0   ( for LOAD or COMMAND )
+   -u 999
+
+
+
+Examples:
+---------
+
+    wmdl                    Use All defaults ( Just fine for Window Maker)
+    wmdl -u 1000            Update every second (1000 miliseconds)
+    wmdl -m cpu                Monitor CPU using /proc filesystem.
+    wmdl -f .5 -u 750        Scale. A load of .5 is 100% bloody.
+                            Update every 3/4 second.
+    wmdl -w normal -s no    Normal window mode window not shaped.
+                            Do not use shaped windows extension.
+    wmdl -v                    Print lots of useless information to stdout.
+    wmdl -h                 Usage, Version, and Help.
+
+
+    AfterStep Note:
+
+    Thanks to Thadeu Penna <tjpp@bu.edu> who wrote:
+    In my wharf file (AfterStep 1.7.25-devel)
+     *Wharf wmdl  - MaxSwallow "wmdl" wmdl -f 1.2 &
+
+
+
+    Using the command mode: (-m command your_command index )
+    -----------------------
+     * wmdl executes 'your_command'
+     * wmdl uses the index'th token returned by 'your_command'.
+     * wmdl processes only the first line returned by command.
+     * tokens are seperated by tabs, spaces, newlines, or commas 
+     * if you use the -v switch for verbose mode, you can see exactly what
+       wmdl is trying to do with your command and index.
+     * note: these examples work on my linux box, you may need to twiddle
+       with them on your unix flavor.
+
+    Command Mode Example 1:
+    -----------------------
+    Use the 8th token returned by the shell command 'uptime':
+    wmdl -m command uptime 8
+
+    because:
+    uptime:    11:47pm  up  3:30,  4 users,  load average: 0.34, 0.33, 0.28
+               ^        ^   ^      ^ ^       ^    ^        ^     ^     ^
+    index:     1        2   3      4 5       6    7        8     9     10
+
+
+    Other Unixen:
+        HP-UX 10.20:  use '-m command uptime 10'
+
+
+    Command Mode Example 2:
+    -----------------------
+    Monitor the number of users with 10 users being 100% bloody:
+    wmdl -m command "who | wc -l" 1    -f 10
+
+
+
+    Command Mode Example 3:
+    -----------------------
+    Monitor the ping time to www.slashdot.org with 1000 ms being 100% bloody:
+    wmdl -m command "ping www.slashdot.org -c 1 | head -n 2 | tail -n 1 \
+      | sed 's/.*time=//'" 1 -f 1000 -v
+
+
+
+NOTES:
+------
+
+This Appicon is in tribute the the world's greatest game -- DOOM -- and the 
+hundreds of hours it consumed.
+
+This software is based on numerious other peoples appicons including wmmon, 
+wmppp, wmload, etc.
+
+This softare is GPL except of course for the DOOM face images which are 
+certaintly owned by ID Software.
+
+ID Software -- please don't sue me.
+
+
+Please send comments, flames, etc to buddog@aztec.asu.edu
+
+- Ben Cohen
+
+
+
+
+
+CHANGE LOG:
+-----------
+wmdl-1.3.7 Aug 26, 1999
+    Added limited support for 8-bit color depths.
+    Sets pixmap closeness attribute to 50001 to match colors already
+    allocated if color allocation fails with XpmCratePixmapFromData.
+    Also, added some Makefile libs for compiliation on Solaris.
+    --thanks to Chris Conn <cconn@abacom.com> for this.
+
+wmdl-1.3.6 Jul 18, 1999
+    Fixed bug where atof(strtok(buffer,tokens)) could be trying to do a
+    atof(NULL) if the odd occation occoured where reading 
+    from /proc/loadavg returned goofy stuff.
+
+wmdl-1.3.5 Feb 13, 1999
+    Added the '-m command index' option.
+    Overhauled the command line arguments section.
+        
+wmdl-1.3 Jan 18, 1999
+    Fixed default scale being forced when using -m switch.
+    Made verbose more usefull.
+    Added -w switch. Removed -i switch. Modified -s switch.
+
+wmdl-1.2 Jan 18, 1999
+    Fixed scale not handling floating point numbers properly.
+    int scale_factor should be float scale_factor in refresh().
+
+wmdl-1.1 Dec 25, 1998
+    First version.
+
+
