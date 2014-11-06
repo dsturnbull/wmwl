@@ -1,10 +1,10 @@
 
 
-wmdl ( Window Maker DOOM load (meter) )
+wmdl ( Window Maker Wolf 3D load (meter) )
 
 Version 1.3.7
 
-A simple LOAD or CPU meter using ID Software's DOOM faces.
+A simple LOAD or CPU meter using ID Software's Wolf 3D faces.
 ( More Bloody = more system load or CPU usage ).
 
 Also can monitor almost anything else.
@@ -145,13 +145,13 @@ Examples:
 NOTES:
 ------
 
-This Appicon is in tribute the the world's greatest game -- DOOM -- and the 
+This Appicon is in tribute the the world's greatest game -- Wolf 3D -- and the 
 hundreds of hours it consumed.
 
 This software is based on numerious other peoples appicons including wmmon, 
 wmppp, wmload, etc.
 
-This softare is GPL except of course for the DOOM face images which are 
+This softare is GPL except of course for the Wolf 3D face images which are 
 certaintly owned by ID Software.
 
 ID Software -- please don't sue me.
@@ -167,6 +167,9 @@ Please send comments, flames, etc to buddog@aztec.asu.edu
 
 CHANGE LOG:
 -----------
+wmwl-1.3.7-dav ~2000
+    Changed to wolf3d xpms.
+
 wmdl-1.3.7 Aug 26, 1999
     Added limited support for 8-bit color depths.
     Sets pixmap closeness attribute to 50001 to match colors already
